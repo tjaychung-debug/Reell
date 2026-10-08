@@ -101,14 +101,20 @@ public class ShuffleAccessibilityService extends AccessibilityService {
     }
 
     private void updateOverlays() {
-        if (!instagramForeground || windowManager == null) {
-            removeShield();
-            removeBubble();
-            return;
+    if (windowManager == null) return;
+
+    removeBubble();
+
+    if (instagramForeground) {
+        if (!active) {
+            active = true;
+            directions.reset();
         }
-        if (active) addShield(); else removeShield();
-        addBubble();
-        updateBubbleText();
+        addShield();
+    } else {
+        active = false;
+        removeShield();
+    }
     }
 
     private void addShield() {
