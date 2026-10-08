@@ -57,10 +57,10 @@ public class ShuffleAccessibilityService extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event == null) return;
         int type = event.getEventType();
-        if (type != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
-                type != AccessibilityEvent.TYPE_WINDOWS_CHANGED) return;
+        if (type != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return;
 
         CharSequence pkg = event.getPackageName();
+        if (pkg == null || getPackageName().contentEquals(pkg)) return;
         // System UI (e.g. permission dialogs/notifications) should not be covered.
         if (type == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && pkg != null) {
             instagramForeground = INSTAGRAM.contentEquals(pkg);
